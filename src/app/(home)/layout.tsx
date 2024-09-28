@@ -1,13 +1,16 @@
 import { Description } from "app/components/home/Description";
 import { Hero } from "app/components/home/Hero";
-import { MainProducts } from "app/components/home/MainProductos";
 
-export default function Home() {
+export default function HomeLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <main>
+    <>
       <Hero />
       <Description />
-      <MainProducts />
-    </main>
+      {children}
+    </>
   );
 }
