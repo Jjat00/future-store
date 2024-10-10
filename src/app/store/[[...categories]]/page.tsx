@@ -1,3 +1,6 @@
+import { ProductsWrapper } from "app/components/Store/ProductsWrapper";
+import { getProducts } from "app/services/shopify";
+
 interface CategoryProps {
   params: {
     categories: string[];
@@ -5,21 +8,13 @@ interface CategoryProps {
   searchParams?: Record<string, string | string[]>;
 }
 
-export default function Category(props: CategoryProps) {
+export default async function Category(props: CategoryProps) {
   const { categories } = props.params;
   const { searchParams } = props;
 
+  const products = await getProducts();
+
   console.log("searchParams: ", searchParams);
 
-  return (
-    <div>
-      <h1>Categories: </h1>
-      {categories &&
-        categories.map((category, index) => (
-          <ul key={index}>
-            <li>{category}</li>
-          </ul>
-        ))}
-    </div>
-  );
+  return <ProductsWrapper products={products} />;
 }
