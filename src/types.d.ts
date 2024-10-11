@@ -3,13 +3,23 @@ interface ErrorPageProps {
   reset: () => void;
 }
 
-type ProductType = {
-  id: string;
-  title: string;
-  description: string;
-  price: number;
-  image: string;
-  quantity: number;
+interface Collection {
+  id: number;
   handle: string;
-  tags: string;
-};
+  title: string;
+  updated_at: string;
+  body_html: string;
+  published_at: string;
+  sort_order: string;
+  template_suffix: string;
+  disjunctive: boolean;
+  rules: Rule[];
+  published_scope: string;
+  admin_graphql_api_id: string;
+}
+
+interface Rule {
+  column: string;
+  relation: string;
+  condition: string;
+}
