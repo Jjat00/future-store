@@ -10,13 +10,10 @@ interface CategoryProps {
   params: {
     categories: string[];
   };
-  searchParams?: Record<string, string | string[]>;
 }
 
 export default async function Category(props: CategoryProps) {
   const { categories } = props.params;
-
-  const { searchParams } = props;
 
   let products: Product[] = [];
 
