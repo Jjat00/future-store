@@ -6,8 +6,13 @@ type ShopifyApiResponse = {
   products: Product[];
 };
 
-export const getProducts = async (): Promise<Product[]> => {
-  const response = await fetch(shopifyUrls.products.all, {
+export const getProducts = async (id?: string): Promise<Product[]> => {
+  const apiUrl = id
+    ? `${shopifyUrls.products.all}?ids=${id}`
+    : shopifyUrls.products.all;
+
+  console.log("apiUrl", apiUrl);
+  const response = await fetch(apiUrl, {
     headers: {
       "X-Shopify-Access-Token": env.SHOPIFY_TOKEN || "",
     },
