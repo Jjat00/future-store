@@ -21,3 +21,14 @@ export const getProducts = async (id?: string): Promise<Product[]> => {
   const data: ShopifyApiResponse = await response.json();
   return data.products;
 };
+
+export const getMainProducts = async (): Promise<Product[]> => {
+  const response = await fetch(shopifyUrls.products.mainProducts, {
+    headers: {
+      "X-Shopify-Access-Token": env.SHOPIFY_TOKEN || "",
+    },
+  });
+
+  const data: ShopifyApiResponse = await response.json();
+  return data.products;
+};
