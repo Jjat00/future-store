@@ -20,7 +20,7 @@ export default async function Category(props: CategoryProps) {
   const collections = await getCollections();
 
   const selectedCollection = collections.find(
-    (collection) => collection.handle === categories[0]
+    (collection) => collection.handle === categories?.[0]
   )?.id;
 
   if (selectedCollection)
