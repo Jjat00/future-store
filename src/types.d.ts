@@ -23,3 +23,10 @@ interface Rule {
   relation: string;
   condition: string;
 }
+
+type CartItem = {
+  title: string;
+  price: string;
+  quantity: number;
+  id: number;
+};

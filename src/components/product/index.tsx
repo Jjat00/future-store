@@ -32,6 +32,7 @@ export const ProductView = ({ product }: ProductViewProps) => {
         </span>
         <ProductViewItemsOrder
           maxQuantity={product?.variants[0].inventory_quantity}
+          product={product}
         />
       </section>
     </main>
