@@ -1,9 +1,8 @@
 import Link from "next/link";
-import { cookies } from "next/headers";
+import { validateAccessToken } from "app/utils/auth/validateAccessToken";
 
-export function Header() {
-  const cookieStore = cookies();
-  const accessToken = cookieStore.get("accessToken")?.value;
+export async function Header() {
+  const customer = await validateAccessToken();
 
   return (
     <header>
@@ -16,7 +15,7 @@ export function Header() {
             <Link href="/store">Store</Link>
           </li>
         </ul>
-        {!accessToken ? (
+        {!customer?.firstName ? (
           <ul>
             <li>
               <Link href="/login">Login</Link>
@@ -25,7 +24,7 @@ export function Header() {
         ) : (
           <ul>
             <li>
-              <Link href="/logout">Logout</Link>
+              <Link href="/logout">Logout {customer?.firstName}</Link>
             </li>
           </ul>
         )}
