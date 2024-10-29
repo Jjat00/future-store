@@ -22,7 +22,6 @@ export const handleCreateUser = async (formData: FormData) => {
     createUserMutation,
     variables
   );
-  console.log("🚀 ~ handleCreateUser ~ customerCreate:", customerCreate);
 
   const { customer } = customerCreate;
   if (customer?.firstName) {
@@ -30,6 +29,19 @@ export const handleCreateUser = async (formData: FormData) => {
       formDataObject.email as string,
       formDataObject.password as string
     );
+    redirect("/store");
+  }
+};
+
+export const handleLogin = async (formData: FormData) => {
+  const formDataObject = Object.fromEntries(formData);
+  console.log("formDataObject", formDataObject);
+  const accesToken = await createAccessToken(
+    formDataObject.email as string,
+    formDataObject.password as string
+  );
+  console.log("accesToken", accesToken);
+  if (accesToken) {
     redirect("/store");
   }
 };
