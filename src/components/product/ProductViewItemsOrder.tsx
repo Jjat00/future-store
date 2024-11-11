@@ -41,6 +41,8 @@ export const ProductViewItemsOrder = ({
       price: product.variants[0].price,
       quantity: counter,
       id: product.variants[0].id,
+      image: product.image.src,
+      merchandiseId: product.variants[0].admin_graphql_api_id,
     });
   };
 

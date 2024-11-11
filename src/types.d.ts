@@ -29,4 +29,6 @@ type CartItem = {
   price: string;
   quantity: number;
   id: number;
+  image: string;
+  merchandiseId: string;
 };

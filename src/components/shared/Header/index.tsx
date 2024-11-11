@@ -1,7 +1,15 @@
 import Link from "next/link";
-import { ShoppingCart } from "app/components/shared/ShoppingCart";
+// import ShoppingCart from "app/components/shared/ShoppingCart";
 import { validateAccessToken } from "app/utils/auth/validateAccessToken";
 import styles from "./Header.module.sass";
+import dynamic from "next/dynamic";
+
+const DynamicCart = dynamic(
+  () => import("app/components/shared/ShoppingCart"),
+  {
+    ssr: false,
+  }
+);
 
 export const Header = async () => {
   const customer = await validateAccessToken();
@@ -24,7 +32,7 @@ export const Header = async () => {
         ) : (
           <Link href="/login">Login</Link>
         )}
-        <ShoppingCart />
+        <DynamicCart />
       </div>
     </header>
   );
