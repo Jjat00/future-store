@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ShoppingCart } from "app/components/ShoppingCart";
+import { ShoppingCart } from "app/components/shared/ShoppingCart";
 import { validateAccessToken } from "app/utils/auth/validateAccessToken";
 import styles from "./Header.module.sass";
 
