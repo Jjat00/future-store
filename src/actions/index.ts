@@ -82,3 +82,10 @@ export const handleCreateCart = async (items: CartItem[]) => {
 
   return cartCreate?.cart?.checkoutUrl;
 };
+
+
+export const deleteAccessToken = async () => {
+  const cookiesStore = cookies();
+  cookiesStore.delete("accessToken");
+  redirect("/login");
+};

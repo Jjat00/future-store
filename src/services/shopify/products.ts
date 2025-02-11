@@ -11,7 +11,6 @@ export const getProducts = async (id?: string): Promise<Product[]> => {
     ? `${shopifyUrls.products.all}?ids=${id}`
     : shopifyUrls.products.all;
 
-  console.log("apiUrl", apiUrl);
   const response = await fetch(apiUrl, {
     headers: {
       "X-Shopify-Access-Token": env.SHOPIFY_TOKEN || "",

@@ -13,7 +13,6 @@ export const createAccessToken = async (email: string, password: string) => {
     }
   );
 
-
   const { accessToken, expiresAt } =
     customerAccessTokenCreate?.customerAccessToken;
 

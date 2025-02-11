@@ -1,16 +1,25 @@
 import { cookies } from "next/headers";
 import { GraphQLClientSingleton } from "app/graphql";
 import { customerName } from "app/graphql/queries/customerName";
+import { deleteAccessToken } from "app/actions/index"
 
 export const validateAccessToken = async () => {
-  const cookieStore = cookies();
-  const accessToken = cookieStore.get("accessToken")?.value;
 
-  const graphqlClient = GraphQLClientSingleton.getInstance().getClient();
+  try {
+    const cookieStore = cookies();
+    const accessToken = cookieStore.get("accessToken")?.value;
 
-  const { customer } = await graphqlClient.request(customerName, {
-    customerAccessToken: accessToken,
-  });
+    const graphqlClient = GraphQLClientSingleton.getInstance().getClient();
 
-  return customer;
+    if (!accessToken) return null;
+
+    const { customer } = await graphqlClient.request(customerName, {
+      customerAccessToken: accessToken,
+    });
+
+    return customer;
+  } catch (error) {
+    // delete access token from cookies
+    await deleteAccessToken()
+  }
 };
