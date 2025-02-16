@@ -1,27 +1,44 @@
-import OpenAI from "openai";
-import { OpenAIStream, StreamingTextResponse } from "ai";
+// import { createOpenAI } from '@ai-sdk/openai';
+import { openai } from '@ai-sdk/openai';
+import { streamText } from 'ai';
+import { env } from 'app/config/env';
 
-// Create an OpenAI API client (that's edge friendly!)
-const openai = new OpenAI({
-  apiKey: process.env.OPEN_AI_KEY,
-});
+// const openai = createOpenAI({
+//   // custom settings, e.g.
+//   compatibility: 'strict', // strict mode, enable when using the OpenAI API
+//   apiKey: env.OPENAI_API_KEY,
+// });
 
-// IMPORTANT! Set the runtime to edge
-export const runtime = "edge";
+
+// Allow streaming responses up to 30 seconds
+export const maxDuration = 30;
+
+export const runtime = 'edge'
+
 
 export async function POST(req: Request) {
-  console.log("🫤🫤🫤");
-  // Extract the `messages` from the body of the request
   const { messages } = await req.json();
 
-  // Ask OpenAI for a streaming chat completion given the prompt
-  const response = await openai.chat.completions.create({
-    model: "gpt-3.5-turbo",
-    stream: true,
+  const result = streamText({
+    model: openai('gpt-4o-mini'),
     messages,
   });
-  // Convert the response into a friendly text-stream
-  const stream = OpenAIStream(response);
-  // Respond with the stream
-  return new StreamingTextResponse(stream);
+
+  return result.toDataStreamResponse({
+    getErrorMessage: error => {
+      if (error == null) {
+        return 'unknown error';
+      }
+
+      if (typeof error === 'string') {
+        return error;
+      }
+
+      if (error instanceof Error) {
+        return error.message;
+      }
+
+      return JSON.stringify(error);
+    },
+  });
 }

@@ -22,7 +22,6 @@ export default function ShoppingCart() {
     try {
       setIsBuying(true);
       const checkoutUrl = await handleCreateCart(cart);
-      console.log("🚀 ~ handleBuy ~ checkoutUrl:", checkoutUrl);
       if (!checkoutUrl) throw new Error("Error creating checkout");
       window.localStorage.removeItem("cart");
       window.location.href = checkoutUrl;

@@ -1,29 +1,37 @@
 "use client";
 
-import { useChat } from "ai/react";
+import { useChat } from "@ai-sdk/react";
+import styles from "./chat.module.sass"
 
-export const Chat = () => {
-  const { messages, input, handleInputChange, handleSubmit } = useChat();
+export const Chat = (props: { agent: string }) => {
+  const { messages, input, handleInputChange, handleSubmit } = useChat({
+    initialMessages: [
+      {
+        id: '0',
+        role: "system",
+        content: props.agent,
+      },
+    ]
+  });
+
 
   return (
-    <main className="mx-auto w-full h-screen max-w-lg p-24 flex flex-col">
-      <section className="mb-auto m">
-        {messages.map((m) => (
-          <div className="mb-4" key={m.id}>
+    <main className={styles.Chat}>
+      <section>
+        {messages.filter(m => m.role !== "system").map((m) => (
+          <div key={m.id}>
             {m.role === "user" ? "User: " : "AI: "}
             {m.content}
           </div>
         ))}
       </section>
-      <form className="flex space-x-4" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <input
-          className="rounded-md p-2 text-black"
           value={input}
           onChange={handleInputChange}
           placeholder="Say something..."
         />
         <button
-          className="border-solid border-2 border-white p-2 rounded-md"
           type="submit"
         >
           Send
