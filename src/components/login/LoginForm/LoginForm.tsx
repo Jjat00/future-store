@@ -3,8 +3,8 @@ import { handleLogin } from "app/actions";
 import styles from "./LoginForm.module.sass";
 
 export const LoginForm = () => {
-  const handleSubmit = async (event) => {
-    const formData = new FormData(event.target);
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    const formData = new FormData(event.target as HTMLFormElement);
     event.preventDefault();
     await handleLogin(formData);
   };
